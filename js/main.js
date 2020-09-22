@@ -1,6 +1,6 @@
 const tableBody = document.querySelector('tbody');
 const addBookBtn = document.querySelector('#new-book');
-const submitBtn = document.querySelector('#submit');
+const form = document.querySelector('form');
 const formContainer = document.querySelector('.form-container');
 const mainContainer = document.querySelector('.library-container');
 let myLibrary = [];
@@ -130,7 +130,10 @@ function updateLocalStorage(myLibrary) {
 addBookBtn.addEventListener('click', toggleForm);
 
 // listen for click on form submit
-submitBtn.addEventListener('click', createNewBook);
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  createNewBook();
+});
 
 // read library from local storage on document load
 window.addEventListener('load', () => {
