@@ -1,20 +1,19 @@
-const tableBody = document.querySelector('tbody');
-const addBookBtn = document.querySelector('#new-book');
-const form = document.querySelector('form');
-const formContainer = document.querySelector('.form-container');
-const mainContainer = document.querySelector('.library-container');
+const tableBody = document.querySelector("tbody");
+const addBookBtn = document.querySelector("#new-book");
+const form = document.querySelector("form");
+const formContainer = document.querySelector(".form-container");
+const mainContainer = document.querySelector(".library-container");
 let myLibrary = [];
 let bookId = 0;
 
-function Book(title, author, pages, hasRead) {
-  this.title = title ? title : "--";
-  this.author = author ? author : "--";
-  this.pages = pages ? pages : "--";
-  this.hasRead = hasRead ? hasRead : false;
-  this.id = bookId++;
-
-  // prevent id from being iterated over
-  Object.defineProperty(this, 'id', {enumerable: false});
+class Book {
+  constructor(title, author, pages, hasRead) {
+    this.title = title ? title : "--";
+    this.author = author ? author : "--";
+    this.pages = pages ? pages : "--";
+    this.hasRead = hasRead ? hasRead : false;
+    this.id = bookId++;
+  }
 }
 
 function addBookToLibrary(book) {
@@ -26,54 +25,53 @@ function displayBooks() {
 }
 
 function displayBook(book) {
-
   // associate id with row for later filtering
-  const row = document.createElement('tr');
+  const row = document.createElement("tr");
   row.id = book.id;
 
   // create table cell for each book property except id
-  for (const prop in book) row.appendChild(createCell(book[prop]));
+  for (const prop in book) {
+    if (prop === "id") continue;
+    row.appendChild(createCell(book[prop]));
+  }
 
   // create table cell containing clickable remove button
-  const remove = document.createElement('button');
+  const remove = document.createElement("button");
   remove.classList.add("remove");
   row.appendChild(createCell(remove));
-  remove.addEventListener('click', removeBook);
+  remove.addEventListener("click", removeBook);
 
   tableBody.appendChild(row);
 }
 
 // create table cell containing given input
 function createCell(input) {
+  const cell = document.createElement("td");
 
-  const cell = document.createElement('td');
-  
   if (typeof input === "string") cell.innerHTML = input;
-
   // apply tick and cross overlay css to boolean values
-  else if (typeof input === "boolean") cell.appendChild(createStatusInput(input));
-
+  else if (typeof input === "boolean")
+    cell.appendChild(createStatusInput(input));
   // input is the button remove object
   else {
-    cell.appendChild(input)
-    cell.classList.add('remove-cell');
+    cell.appendChild(input);
+    cell.classList.add("remove-cell");
   }
   return cell;
 }
 
 function createStatusInput(input) {
-  const span = document.createElement('span');
-  span.classList.add(input ? 'read-cross' : 'read-tick');
-  span.addEventListener('click', toggleReadStatus);
+  const span = document.createElement("span");
+  span.classList.add(input ? "read-cross" : "read-tick");
+  span.addEventListener("click", toggleReadStatus);
   span.innerHTML = input ? "read" : "unread";
   return span;
 }
 
-
 // toggle visibility of the new book form
 function toggleForm() {
-  formContainer.classList.toggle('invisible');
-  mainContainer.classList.toggle('invisible');
+  formContainer.classList.toggle("invisible");
+  mainContainer.classList.toggle("invisible");
 }
 
 function removeBook() {
@@ -90,10 +88,10 @@ function removeBook() {
 // initialise new book based on form input and add to library
 function createNewBook() {
   const book = new Book(
-    document.querySelector('#name').value,
-    document.querySelector('#author').value,
-    document.querySelector('#pages').value,
-    document.querySelector('#read').value == "true" ? true : false
+    document.querySelector("#name").value,
+    document.querySelector("#author").value,
+    document.querySelector("#pages").value,
+    document.querySelector("#read").value == "true" ? true : false
   );
   addBookToLibrary(book);
   updateLocalStorage(myLibrary);
@@ -114,7 +112,7 @@ function toggleReadStatus() {
 }
 
 function getBookByID(id) {
-  return myLibrary.filter(book => book.id == id)[0];
+  return myLibrary.filter((book) => book.id == id)[0];
 }
 
 function getRowIdByChildNode(node) {
@@ -123,24 +121,25 @@ function getRowIdByChildNode(node) {
 }
 
 function updateLocalStorage(myLibrary) {
-  localStorage.setItem('library', JSON.stringify(myLibrary));
+  localStorage.setItem("library", JSON.stringify(myLibrary));
 }
 
 // listen for click on the new book button
-addBookBtn.addEventListener('click', toggleForm);
+addBookBtn.addEventListener("click", toggleForm);
 
 // listen for click on form submit
-form.addEventListener('submit', (e) => {
+form.addEventListener("submit", (e) => {
   e.preventDefault();
   createNewBook();
 });
 
 // read library from local storage on document load
-window.addEventListener('load', () => {
+window.addEventListener("load", () => {
   if (localStorage.length !== 0) {
-
-    JSON.parse(localStorage.getItem('library')).forEach((book) => {
-      myLibrary.push(new Book(book.title, book.author, book.pages, book.hasRead));
+    JSON.parse(localStorage.getItem("library")).forEach((book) => {
+      myLibrary.push(
+        new Book(book.title, book.author, book.pages, book.hasRead)
+      );
     });
 
     displayBooks();
