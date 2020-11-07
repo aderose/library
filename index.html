@@ -25,14 +25,20 @@
     <div class="form-container container invisible">
       <h1>Add a book:</h1>
       <form>
-        <label for="name">What is the book name?</label>
+        <label for="name">What is the book name? (required)</label>
         <input type="text" name="name" id="name" required />
-        <label for="author">What is the author's name?</label>
+        <label for="author">What is the author's name? (required)</label>
         <input type="text" name="author" id="author" required />
-        <label for="pages">Number of pages?</label>
-        <input type="text" name="pages" id="pages" required />
-        <label for="read">Have you read the book? (true/false)</label>
-        <input type="text" name="read" id="read" required />
+        <label for="pages">Number of pages? (required)</label>
+        <input type="text" name="pages" id="pages" required pattern="[0-9]+" />
+        <label for="read">Have you read the book? (required: true/false)</label>
+        <input
+          type="text"
+          name="read"
+          id="read"
+          required
+          pattern="true|false"
+        />
         <input type="submit" value="Submit" id="submit" />
       </form>
     </div>
