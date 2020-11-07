@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
     <title>Library</title>
-</head>
-<body>
-  <div class="container library-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Author</th>
-          <th>Pages</th>
-          <th>Status</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-    <button id="new-book">Add Book</button>
-  </div>
-  <div class="form-container container invisible">
-    <h1>Add a book:</h1>
-    <form>
-      <label for="name">What is the book name?</label>
-      <input type="text" name="name" id="name">
-      <label for="author">What is the author's name?</label>
-      <input type="text" name="author" id="author">
-      <label for="pages">Number of pages?</label>
-      <input type="text" name="pages" id="pages">
-      <label for="read">Have you read the book? (true/false)</label>
-      <input type="text" name="read" id="read">
-      <input type="submit" value="Submit" id="submit">
-    </form>
-  </div>
-  <script src="js/main.js"></script>
-</body>
+  </head>
+  <body>
+    <div class="container library-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Pages</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button id="new-book">Add Book</button>
+    </div>
+    <div class="form-container container invisible">
+      <h1>Add a book:</h1>
+      <form>
+        <label for="name">What is the book name?</label>
+        <input type="text" name="name" id="name" required />
+        <label for="author">What is the author's name?</label>
+        <input type="text" name="author" id="author" required />
+        <label for="pages">Number of pages?</label>
+        <input type="text" name="pages" id="pages" required />
+        <label for="read">Have you read the book? (true/false)</label>
+        <input type="text" name="read" id="read" required />
+        <input type="submit" value="Submit" id="submit" />
+      </form>
+    </div>
+    <script src="js/main.js"></script>
+  </body>
 </html>
